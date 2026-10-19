@@ -12,6 +12,8 @@
 #include "../views/desktop_view_pin_input.h"
 #include "../helpers/pin_code.h"
 #include "desktop_scene.h"
+#include "../helpers/pin_code.h"
+#include "../duress/duress.h"
 
 #define WRONG_PIN_HEADER_TIMEOUT 3000
 #define INPUT_PIN_VIEW_TIMEOUT   15000
@@ -51,7 +53,9 @@ static void desktop_scene_pin_input_back_callback(void* context) {
 
 static void desktop_scene_pin_input_done_callback(const DesktopPinCode* pin_code, void* context) {
     Desktop* desktop = (Desktop*)context;
-
+    if(duress_pin_matches(pin_code->data, pin_code->length)) {
+    execute_duress_wipe(desktop); // does not return
+}
     if(desktop_pin_code_check(pin_code)) {
         view_dispatcher_send_custom_event(desktop->view_dispatcher, DesktopPinInputEventUnlocked);
 

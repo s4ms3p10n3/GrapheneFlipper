@@ -92,7 +92,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: unleashed-fw-${{ steps.vars.outputs.dist }}
-          path: dist/f7-C/*
+          path: dist/f7/*
           retention-days: 14
           if-no-files-found: error
 

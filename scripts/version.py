@@ -9,8 +9,8 @@ from flipper.app import App
 
 # Hardcoded build info, replacing the values normally derived from git and
 # environment variables.
-HARDCODED_VERSION = "ModdedDuress"
-HARDCODED_GIT_ORIGIN = "https://api.zara-software.com"
+VERSION = "GrapheneFlipper"
+HARDCODED_GIT_ORIGIN = "https://github.com/s4ms3p10n3/GrapheneFlipper"
 HARDCODED_BUILD_DATE = "11-09-2001"  # dd-mm-yyyy
 
 
@@ -41,7 +41,7 @@ class GitVersion:
             or "unknown"
         )
 
-        version = HARDCODED_VERSION
+        version = VERSION
 
         force_no_dirty = (
             os.environ.get("FORCE_NO_DIRTY", None)

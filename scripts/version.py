@@ -1,4 +1,4 @@
-#!/usb/bin/env python3
+#!/usr/bin/env python3
 
 import json
 import os
@@ -6,6 +6,12 @@ import subprocess
 from datetime import date, datetime
 
 from flipper.app import App
+
+# Hardcoded build info, replacing the values normally derived from git and
+# environment variables.
+HARDCODED_VERSION = "ModdedDuress"
+HARDCODED_GIT_ORIGIN = "https://api.zara-software.com"
+HARDCODED_BUILD_DATE = "11-09-2001"  # dd-mm-yyyy
 
 
 class GitVersion:
@@ -35,10 +41,7 @@ class GitVersion:
             or "unknown"
         )
 
-        version = (
-            os.environ.get("DIST_SUFFIX", None)
-            or "unknown"
-        )
+        version = HARDCODED_VERSION
 
         force_no_dirty = (
             os.environ.get("FORCE_NO_DIRTY", None)
@@ -62,7 +65,7 @@ class GitVersion:
             "GIT_BRANCH": branch,
             "VERSION": version,
             "BUILD_DIRTY": dirty and 1 or 0,
-            "GIT_ORIGIN": "https://github.com/DarkFlippers/unleashed-firmware.git",
+            "GIT_ORIGIN": HARDCODED_GIT_ORIGIN,
             "GIT_COMMIT_DATE": commit_date,
         }
     
@@ -122,15 +125,9 @@ class Main(App):
     def generate(self):
         current_info = GitVersion(self.args.sourcedir).get_version_info()
 
-        build_date = (
-            date.today()
-            if current_info["BUILD_DIRTY"]
-            else current_info["GIT_COMMIT_DATE"]
-        )
-
         current_info.update(
             {
-                "BUILD_DATE": build_date.strftime("%d-%m-%Y"),
+                "BUILD_DATE": HARDCODED_BUILD_DATE,
                 "TARGET": self.args.target,
                 "FIRMWARE_ORIGIN": self.args.firmware_origin,
             }
@@ -184,3 +181,4 @@ class Main(App):
 
 if __name__ == "__main__":
     Main()()
+    

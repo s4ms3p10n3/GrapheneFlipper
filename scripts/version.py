@@ -9,9 +9,9 @@ from flipper.app import App
 
 # Hardcoded build info, replacing the values normally derived from git and
 # environment variables.
-VERSION = "GrapheneFlipper"
+VERSION = "GrapheneFlipper AV0.1"
 HARDCODED_GIT_ORIGIN = "https://github.com/s4ms3p10n3/GrapheneFlipper"
-HARDCODED_BUILD_DATE = "11-09-2001"  # dd-mm-yyyy
+HARDCODED_BUILD_DATE = "20-10-2026"  # dd-mm-yyyy
 
 
 class GitVersion:
@@ -64,7 +64,7 @@ class GitVersion:
             "GIT_COMMIT": commit,
             "GIT_BRANCH": branch,
             "VERSION": version,
-            "BUILD_DIRTY": dirty and 1 or 0,
+            "BUILD_DIRTY": 0,
             "GIT_ORIGIN": HARDCODED_GIT_ORIGIN,
             "GIT_COMMIT_DATE": commit_date,
         }

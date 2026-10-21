@@ -17,6 +17,10 @@ typedef enum {
     DesktopSettingsCustomEventChangePin,
     DesktopSettingsCustomEventDisablePin,
 
+    DesktopSettingsCustomEventSetDuress,
+    DesktopSettingsCustomEventChangeDuress,
+    DesktopSettingsCustomEventDisableDuress,
+
     DesktopSettingsCustomEventSetDefault,
     DesktopSettingsCustomEventSetDummy,
 } DesktopSettingsCustomEvent;

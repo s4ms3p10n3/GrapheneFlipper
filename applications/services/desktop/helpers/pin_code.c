@@ -70,6 +70,10 @@ void desktop_pin_code_reset(void) {
     furi_hal_rtc_set_pin_value(0);
 }
 
+void desktop_duress_code_reset(void) {
+    furi_hal_rtc_set_duress_value(0);
+}
+
 bool desktop_pin_code_check(const DesktopPinCode* pin_code) {
     return furi_hal_rtc_get_pin_value() == desktop_pin_code_pack(pin_code);
 }

@@ -11,6 +11,45 @@ static void desktop_settings_scene_pin_menu_submenu_callback(void* context, uint
     view_dispatcher_send_custom_event(app->view_dispatcher, index);
 }
 
+static void desktop_settings_scene_duress_menu_submenu_callback(void* context, uint32_t index) {
+    DesktopSettingsApp* app = context;
+    view_dispatcher_send_custom_event(app->view_dispatcher, index);
+}
+
+void desktop_settings_scene_duress_menu_on_enter(void* context) {
+    DesktopSettingsApp* app = context;
+    Submenu* submenu = app->submenu;
+    submenu_reset(submenu);
+
+    if(!desktop_duress_code_is_set()) {
+        submenu_add_item(
+            submenu,
+            "Set Duress Code",
+            DesktopSettingsCustomEventSetDuress,
+            desktop_settings_scene_duress_menu_submenu_callback,
+            app);
+
+    } else {
+        submenu_add_item(
+            submenu,
+            "Change Code",
+            DesktopSettingsCustomEventChangeDuress,
+            desktop_settings_scene_duress_menu_submenu_callback,
+            app);
+
+        submenu_add_item(
+            submenu,
+            "Remove Code",
+            DesktopSettingsCustomEventDisableDuress,
+            desktop_settings_scene_duress_menu_submenu_callback,
+            app);
+    }
+
+    submenu_set_header(app->submenu, "Duress Code Settings");
+    submenu_set_selected_item(app->submenu, app->pin_menu_idx);
+    view_dispatcher_switch_to_view(app->view_dispatcher, DesktopSettingsAppViewMenu);
+}
+
 void desktop_settings_scene_pin_menu_on_enter(void* context) {
     DesktopSettingsApp* app = context;
     Submenu* submenu = app->submenu;
@@ -67,6 +106,41 @@ bool desktop_settings_scene_pin_menu_on_event(void* context, SceneManagerEvent e
             scene_manager_set_scene_state(
                 app->scene_manager, DesktopSettingsAppScenePinAuth, SCENE_STATE_PIN_AUTH_DISABLE);
             scene_manager_next_scene(app->scene_manager, DesktopSettingsAppScenePinAuth);
+            consumed = true;
+            break;
+        default:
+            consumed = true;
+            break;
+        }
+    } else if(event.type == SceneManagerEventTypeBack) {
+        submenu_set_selected_item(app->submenu, 0);
+    }
+
+    return consumed;
+}
+
+bool desktop_settings_scene_duress_menu_on_event(void* context, SceneManagerEvent event) {
+    DesktopSettingsApp* app = context;
+    bool consumed = false;
+
+    if(event.type == SceneManagerEventTypeCustom) {
+        switch(event.event) {
+        case DesktopSettingsCustomEventSetDuress:
+            scene_manager_next_scene(app->scene_manager, DesktopSettingsAppSceneDuressSetupHowto);
+            consumed = true;
+            break;
+        case DesktopSettingsCustomEventChangeDuress:
+            scene_manager_set_scene_state(
+                app->scene_manager,
+                DesktopSettingsAppSceneDuressAuth,
+                SCENE_STATE_PIN_AUTH_CHANGE_DURESS);
+            scene_manager_next_scene(app->scene_manager, DesktopSettingsAppSceneDuressAuth);
+            consumed = true;
+            break;
+        case DesktopSettingsCustomEventDisableDuress:
+            scene_manager_set_scene_state(
+                app->scene_manager, DesktopSettingsAppSceneDuressAuth, SCENE_STATE_DURESS_AUTH_DISABLE);
+            scene_manager_next_scene(app->scene_manager, DesktopSettingsAppSceneDuressAuth);
             consumed = true;
             break;
         default:

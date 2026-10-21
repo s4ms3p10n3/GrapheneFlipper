@@ -148,6 +148,7 @@ void desktop_settings_scene_start_on_enter(void* context) {
     }
 
     variable_item_list_add(variable_item_list, "PIN Setup", 1, NULL, NULL);
+    variable_item_list_add(variable_item_list, "Duress Pin Setup", 1, NULL, NULL);
 
     item = variable_item_list_add(
         variable_item_list,

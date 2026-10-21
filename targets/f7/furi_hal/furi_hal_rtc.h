@@ -51,7 +51,8 @@ typedef enum {
     /* Index of FS directory entry corresponding to FW update to be applied */
     FuriHalRtcRegisterUpdateFolderFSIndex,
     FuriHalRtcRegisterPinValue, /**< Encoded value of the currently set PIN */
-
+    FuriHalRtcRegisterDuressValue // Value of the duress code
+ 
     FuriHalRtcRegisterMAX, /**< Service value, do not use */
 } FuriHalRtcRegister;
 
@@ -316,11 +317,14 @@ uint32_t furi_hal_rtc_get_pin_fails(void);
  * @param[in] value new PIN code value to be set
  */
 void furi_hal_rtc_set_pin_value(uint32_t value);
+void furi_hal_rtc_set_duress_value(uint32_t value);
+
 
 /** Get the current PIN encoded value
  *
  */
 uint32_t furi_hal_rtc_get_pin_value(void);
+uint32_t furi_hal_rtc_get_duress_value(void);
 
 /** Get UNIX Timestamp
  *

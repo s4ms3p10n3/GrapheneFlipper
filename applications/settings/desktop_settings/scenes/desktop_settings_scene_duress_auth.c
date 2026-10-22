@@ -25,29 +25,29 @@ static void duress_auth_done_callback(const DesktopPinCode* pin_code, void* cont
     }
 }
 
-static void pin_auth_back_callback(void* context) {
+static void duress_auth_back_callback(void* context) {
     DesktopSettingsApp* app = context;
     view_dispatcher_send_custom_event(app->view_dispatcher, DesktopSettingsCustomEventExit);
 }
 
-void desktop_settings_scene_pin_auth_on_enter(void* context) {
-    furi_assert(desktop_pin_code_is_set());
+void desktop_settings_scene_duress_auth_on_enter(void* context) {
+    furi_assert(desktop_duress_code_is_set());
 
     DesktopSettingsApp* app = context;
 
     desktop_view_pin_input_set_context(app->pin_input_view, app);
-    desktop_view_pin_input_set_back_callback(app->pin_input_view, pin_auth_back_callback);
-    desktop_view_pin_input_set_done_callback(app->pin_input_view, pin_auth_done_callback);
+    desktop_view_pin_input_set_back_callback(app->pin_input_view, duress_auth_back_callback);
+    desktop_view_pin_input_set_done_callback(app->pin_input_view, duress_auth_done_callback);
     desktop_view_pin_input_set_label_button(app->pin_input_view, "OK");
     desktop_view_pin_input_set_label_primary(app->pin_input_view, 0, 0, NULL);
     desktop_view_pin_input_set_label_secondary(
-        app->pin_input_view, 0, 8, "Enter your current PIN:");
+        app->pin_input_view, 0, 8, "Enter your current  Duress PIN:");
     desktop_view_pin_input_reset_pin(app->pin_input_view);
     desktop_view_pin_input_unlock_input(app->pin_input_view);
-    view_dispatcher_switch_to_view(app->view_dispatcher, DesktopSettingsAppViewIdPinInput);
+    view_dispatcher_switch_to_view(app->view_dispatcher, DesktopSettingsAppViewIdDuressInput);
 }
 
-bool desktop_settings_scene_pin_auth_on_event(void* context, SceneManagerEvent event) {
+bool desktop_settings_scene_duress_auth_on_event(void* context, SceneManagerEvent event) {
     DesktopSettingsApp* app = context;
     bool consumed = false;
 
@@ -56,16 +56,16 @@ bool desktop_settings_scene_pin_auth_on_event(void* context, SceneManagerEvent e
         case DesktopSettingsCustomEventPinsDifferent:
             scene_manager_set_scene_state(
                 app->scene_manager, DesktopSettingsAppScenePinError, SCENE_STATE_PIN_ERROR_WRONG);
-            scene_manager_next_scene(app->scene_manager, DesktopSettingsAppScenePinError);
+            scene_manager_next_scene(app->scene_manager, DesktopSettingsAppSceneDuressError);
             consumed = true;
             break;
         case DesktopSettingsCustomEventPinsEqual: {
             uint32_t state =
-                scene_manager_get_scene_state(app->scene_manager, DesktopSettingsAppScenePinAuth);
+                scene_manager_get_scene_state(app->scene_manager, DesktopSettingsAppSceneDuressAuth);
             if(state == SCENE_STATE_PIN_AUTH_CHANGE_PIN) {
-                scene_manager_next_scene(app->scene_manager, DesktopSettingsAppScenePinSetupHowto);
+                scene_manager_next_scene(app->scene_manager, DesktopSettingsAppSceneDuressSetupHowto);
             } else if(state == SCENE_STATE_PIN_AUTH_DISABLE) {
-                scene_manager_next_scene(app->scene_manager, DesktopSettingsAppScenePinDisable);
+                scene_manager_next_scene(app->scene_manager, DesktopSettingsAppSceneDuressDisable);
             } else {
                 furi_crash();
             }
@@ -74,7 +74,7 @@ bool desktop_settings_scene_pin_auth_on_event(void* context, SceneManagerEvent e
         }
         case DesktopSettingsCustomEventExit:
             scene_manager_search_and_switch_to_previous_scene(
-                app->scene_manager, DesktopSettingsAppScenePinMenu);
+                app->scene_manager, DesktopSettingsAppSceneDuressMenu);
             consumed = true;
             break;
 

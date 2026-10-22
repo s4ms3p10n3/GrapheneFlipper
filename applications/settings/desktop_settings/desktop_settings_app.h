@@ -15,6 +15,7 @@
 #include <desktop/views/desktop_view_pin_input.h>
 #include "views/desktop_settings_view_pin_setup_howto.h"
 #include "views/desktop_settings_view_pin_setup_howto2.h"
+#include "views/desktop_settings_view_duress_setup_howto.h"
 
 #include <furi_hal_version.h>
 
@@ -25,6 +26,7 @@ typedef enum {
     DesktopSettingsAppViewIdPinInput,
     DesktopSettingsAppViewIdPinSetupHowto,
     DesktopSettingsAppViewIdPinSetupHowto2,
+    DesktopSettingsAppViewIdDuressSetupHowto,
     DesktopSettingsAppViewTextInput,
     DesktopSettingsAppViewDialogEx,
 } DesktopSettingsAppView;
@@ -51,6 +53,7 @@ typedef struct {
     DesktopViewPinInput* pin_input_view;
     DesktopSettingsViewPinSetupHowto* pin_setup_howto_view;
     DesktopSettingsViewPinSetupHowto2* pin_setup_howto2_view;
+    DesktopSettingsViewDuressSetupHowto* duress_setup_howto_view;
     DialogEx* dialog_ex;
 
     DesktopPinCode pincode_buffer;
@@ -61,6 +64,7 @@ typedef struct {
 
     uint8_t menu_idx;
     uint32_t pin_menu_idx;
+    uint32_t duress_menu_idx;
 } DesktopSettingsApp;
 
 /** Scan the loader plugin directory into app->menu_styles, replacing whatever is there - a scan

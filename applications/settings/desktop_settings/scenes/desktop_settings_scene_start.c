@@ -8,6 +8,7 @@
 
 typedef enum {
     DesktopSettingsPinSetup = 0,
+    DesktopSettingsDuressSetup,
     DesktopSettingsAutoLockDelay,
     DesktopSettingsAutoPowerOff,
     DesktopSettingsBatteryDisplay,
@@ -262,6 +263,10 @@ bool desktop_settings_scene_start_on_event(void* context, SceneManagerEvent even
         switch(event.event) {
         case DesktopSettingsPinSetup:
             scene_manager_next_scene(app->scene_manager, DesktopSettingsAppScenePinMenu);
+            break;
+
+        case DesktopSettingsDuressSetup:
+            scene_manager_next_scene(app->scene_manager, DesktopSettingsAppSceneDuressMenu);
             break;
 
             // case DesktopSettingsAutoLockDelay:

@@ -1,5 +1,6 @@
 #include <gui/scene_manager.h>
 #include <applications.h>
+#include <desktop/helpers/pin_code.h>
 
 #include "../desktop_settings_app.h"
 #include "desktop_settings_scene.h"
@@ -46,7 +47,7 @@ void desktop_settings_scene_duress_menu_on_enter(void* context) {
     }
 
     submenu_set_header(app->submenu, "Duress Code Settings");
-    submenu_set_selected_item(app->submenu, app->pin_menu_idx);
+    submenu_set_selected_item(app->submenu, app->duress_menu_idx);
     view_dispatcher_switch_to_view(app->view_dispatcher, DesktopSettingsAppViewMenu);
 }
 
@@ -133,7 +134,7 @@ bool desktop_settings_scene_duress_menu_on_event(void* context, SceneManagerEven
             scene_manager_set_scene_state(
                 app->scene_manager,
                 DesktopSettingsAppSceneDuressAuth,
-                SCENE_STATE_PIN_AUTH_CHANGE_DURESS);
+                SCENE_STATE_DURESS_AUTH_CHANGE_DURESS);
             scene_manager_next_scene(app->scene_manager, DesktopSettingsAppSceneDuressAuth);
             consumed = true;
             break;
@@ -158,5 +159,12 @@ void desktop_settings_scene_pin_menu_on_exit(void* context) {
     DesktopSettingsApp* app = context;
 
     app->pin_menu_idx = submenu_get_selected_item(app->submenu);
+    submenu_reset(app->submenu);
+}
+
+void desktop_settings_scene_duress_menu_on_exit(void* context) {
+    DesktopSettingsApp* app = context;
+
+    app->duress_menu_idx = submenu_get_selected_item(app->submenu);
     submenu_reset(app->submenu);
 }

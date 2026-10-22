@@ -62,6 +62,11 @@ bool desktop_pin_code_is_set(void) {
     return length >= DESKTOP_PIN_CODE_MIN_LEN && length <= DESKTOP_PIN_CODE_MAX_LEN;
 }
 
+bool desktop_duress_code_is_set(void) {
+    uint8_t length = furi_hal_rtc_get_duress_value() >> DESKTOP_PIN_CODE_LENGTH_OFFSET;
+    return length >= DESKTOP_PIN_CODE_MIN_LEN && length <= DESKTOP_PIN_CODE_MAX_LEN;
+}
+
 void desktop_pin_code_set(const DesktopPinCode* pin_code) {
     furi_hal_rtc_set_pin_value(desktop_pin_code_pack(pin_code));
 }
@@ -70,12 +75,20 @@ void desktop_pin_code_reset(void) {
     furi_hal_rtc_set_pin_value(0);
 }
 
+void desktop_duress_code_set(const DesktopPinCode* pin_code) {
+    furi_hal_rtc_set_duress_value(desktop_pin_code_pack(pin_code));
+}
+
 void desktop_duress_code_reset(void) {
     furi_hal_rtc_set_duress_value(0);
 }
 
 bool desktop_pin_code_check(const DesktopPinCode* pin_code) {
     return furi_hal_rtc_get_pin_value() == desktop_pin_code_pack(pin_code);
+}
+
+bool desktop_duress_code_check(const DesktopPinCode* pin_code) {
+    return furi_hal_rtc_get_duress_value() == desktop_pin_code_pack(pin_code);
 }
 
 bool desktop_pin_code_is_equal(const DesktopPinCode* pin_code1, const DesktopPinCode* pin_code2) {

@@ -12,14 +12,16 @@ typedef struct {
 } DesktopPinCode;
 
 bool desktop_pin_code_is_set(void);
+bool desktop_duress_code_is_set(void);
 
 void desktop_pin_code_set(const DesktopPinCode* pin_code);
+void desktop_duress_code_set(const DesktopPinCode* pin_code);
 
 void desktop_pin_code_reset(void);
 void desktop_duress_code_reset(void);
 
-
 bool desktop_pin_code_check(const DesktopPinCode* pin_code);
+bool desktop_duress_code_check(const DesktopPinCode* pin_code);
 
 bool desktop_pin_code_is_equal(const DesktopPinCode* pin_code1, const DesktopPinCode* pin_code2);
 

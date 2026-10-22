@@ -16,7 +16,7 @@ void desktop_settings_scene_duress_setup_howto_on_enter(void* context) {
     DesktopSettingsApp* app = context;
 
     desktop_settings_view_duress_setup_howto_set_callback(
-        app->pin_setup_howto_view, desktop_settings_scene_duress_lock_done_callback, app);
+        app->duress_setup_howto_view, desktop_settings_scene_duress_lock_done_callback, app);
     view_dispatcher_switch_to_view(app->view_dispatcher, DesktopSettingsAppViewIdDuressSetupHowto);
 }
 

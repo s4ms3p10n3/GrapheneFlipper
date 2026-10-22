@@ -5,6 +5,7 @@
 #include "../desktop_settings_app.h"
 #include "../desktop_settings_custom_event.h"
 #include <desktop/desktop_settings.h>
+#include <desktop/helpers/pin_code.h>
 #include "desktop_settings_scene.h"
 
 static void duress_disable_back_callback(void* context) {

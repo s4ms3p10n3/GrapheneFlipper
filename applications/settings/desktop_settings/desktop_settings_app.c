@@ -150,6 +150,7 @@ DesktopSettingsApp* desktop_settings_app_alloc(void) {
     app->pin_input_view = desktop_view_pin_input_alloc();
     app->pin_setup_howto_view = desktop_settings_view_pin_setup_howto_alloc();
     app->pin_setup_howto2_view = desktop_settings_view_pin_setup_howto2_alloc();
+    app->duress_setup_howto_view = desktop_settings_view_duress_setup_howto_alloc();
     app->dialog_ex = dialog_ex_alloc();
 
     view_dispatcher_add_view(
@@ -172,6 +173,10 @@ DesktopSettingsApp* desktop_settings_app_alloc(void) {
         app->view_dispatcher,
         DesktopSettingsAppViewIdPinSetupHowto2,
         desktop_settings_view_pin_setup_howto2_get_view(app->pin_setup_howto2_view));
+    view_dispatcher_add_view(
+        app->view_dispatcher,
+        DesktopSettingsAppViewIdDuressSetupHowto,
+        desktop_settings_view_duress_setup_howto_get_view(app->duress_setup_howto_view));
     view_dispatcher_add_view(
         app->view_dispatcher, DesktopSettingsAppViewDialogEx, dialog_ex_get_view(app->dialog_ex));
 
@@ -216,6 +221,7 @@ void desktop_settings_app_free(DesktopSettingsApp* app) {
     view_dispatcher_remove_view(app->view_dispatcher, DesktopSettingsAppViewIdPinInput);
     view_dispatcher_remove_view(app->view_dispatcher, DesktopSettingsAppViewIdPinSetupHowto);
     view_dispatcher_remove_view(app->view_dispatcher, DesktopSettingsAppViewIdPinSetupHowto2);
+    view_dispatcher_remove_view(app->view_dispatcher, DesktopSettingsAppViewIdDuressSetupHowto);
     view_dispatcher_remove_view(app->view_dispatcher, DesktopSettingsAppViewDialogEx);
     // TextInput
     view_dispatcher_remove_view(app->view_dispatcher, DesktopSettingsAppViewTextInput);
@@ -227,6 +233,7 @@ void desktop_settings_app_free(DesktopSettingsApp* app) {
     desktop_view_pin_input_free(app->pin_input_view);
     desktop_settings_view_pin_setup_howto_free(app->pin_setup_howto_view);
     desktop_settings_view_pin_setup_howto2_free(app->pin_setup_howto2_view);
+    desktop_settings_view_duress_setup_howto_free(app->duress_setup_howto_view);
     dialog_ex_free(app->dialog_ex);
     desktop_settings_menu_styles_free(app);
     // View dispatcher

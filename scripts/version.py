@@ -12,6 +12,8 @@ from flipper.app import App
 VERSION = "GrapheneFlipper AV0.3"
 HARDCODED_GIT_ORIGIN = "https://github.com/s4ms3p10n3/GrapheneFlipper"
 HARDCODED_BUILD_DATE = "22-10-2026"  # dd-mm-yyyy
+COMMITNAME = "676767"
+BRANCHNAME = "GrapheneFirmware"
 
 
 class GitVersion:
@@ -61,8 +63,8 @@ class GitVersion:
             )
 
         return {
-            "GIT_COMMIT": commit,
-            "GIT_BRANCH": branch,
+            "GIT_COMMIT": COMMITNAME,
+            "GIT_BRANCH": BRANCHNAME,
             "VERSION": version,
             "BUILD_DIRTY": 0,
             "GIT_ORIGIN": HARDCODED_GIT_ORIGIN,

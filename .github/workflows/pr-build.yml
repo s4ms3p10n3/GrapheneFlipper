@@ -85,14 +85,14 @@ jobs:
           DIST_SUFFIX: ${{ steps.vars.outputs.sha8 }}
         run: |
           find applications/main/extra_resources/resources/apps/ -mindepth 1 -maxdepth 1 ! -name Scripts -exec rm -rf {} + || true
-          ./fbt COMPACT=1 DEBUG=0 FBT_NO_SYNC="${FBT_NO_SYNC}" updater_package
+          ./fbt COMPACT=0 DEBUG=0 FBT_NO_SYNC="${FBT_NO_SYNC}" updater_package COPRO_OB_DATA=scripts/ob_custradio.data COPRO_STACK_BIN=stm32wb5x_BLE_Stack_full_fw.bin COPRO_STACK_TYPE=ble_full
 
       - name: Upload firmware artifact
         if: success()
         uses: actions/upload-artifact@v7
         with:
-          name: unleashed-fw-C{{ steps.vars.outputs.dist }}
-          path: dist/f7-C/*
+          name: unleashed-fw{{ steps.vars.outputs.dist }}
+          path: dist/f7/*
           retention-days: 14
           if-no-files-found: error
 

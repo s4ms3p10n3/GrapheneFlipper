@@ -19,7 +19,7 @@ DEBUG = 0
 DIST_SUFFIX = "local"
 
 # Coprocessor firmware
-COPRO_OB_DATA = "scripts/ob.data"
+COPRO_OB_DATA = "scripts/ob_custradio.data"
 
 # Must match lib/stm32wb_copro version
 COPRO_CUBE_VERSION = "1.20.0"

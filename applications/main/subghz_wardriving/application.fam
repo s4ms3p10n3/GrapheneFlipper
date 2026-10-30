@@ -1,9 +1,10 @@
 App(
     appid="subghz_wardriving",
-    name="Sub-GHz WarDriving",
-    apptype=FlipperAppType.EXTERNAL,
+    name="Sub-GHz: WarDriving",
+    apptype=FlipperAppType.MENUEXTERNAL,
     targets=["f7"],
     entry_point="subghz_app",
+    icon="A_Sub1ghz_14",
     stack_size=3 * 1024,
     fap_libs=["assets", "hwdrivers"],
     fap_icon="icon.png",

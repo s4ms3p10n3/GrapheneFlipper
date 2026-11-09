@@ -61,3 +61,4 @@
 #include "allstar_firefly.h"
 #include "telcoma_edge.h"
 #include "freezer.h"
+#include "faac_tm.h"

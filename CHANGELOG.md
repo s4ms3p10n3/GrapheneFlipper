@@ -1,6 +1,7 @@
 ## Main changes
-- Current API: 88.24
+- Current API: 88.25
 - SubGHz: **KeeLoq remotes that send at half the usual rate (Te 200us) are now decoded, and sent back at the rate they were received at**
+- SubGHz: **A KeeLoq remote sending at half rate is shown as `Crypt Key`, instead of an unknown manufacturer**
 - SubGHz: **Hormann HSM remotes whose frame starts with seven preamble ones instead of eight are now decoded**
 - SubGHz: **Nice O-Code remotes that send the longer 72bit frame now work, as `Nice O-Code One 433MHz` in Add Manually**
 - SubGHz: **Nice O-Code 112bit frames carrying the receiver certificate are decoded and sent, as `Nice O-Code+Crt 433MHz`**
@@ -17,6 +18,8 @@
 - Apps: **`Seed Capturer` supports BFT Mitto remotes on 433.92 MHz, the same way as Erreka**
 - Apps: **New `Remote Analyzer` app - garage and gate remotes SubGHz does not support yet are still detected, with their type and details shown**
 - Apps: **`Remote Analyzer` - `Mod. sweep` walks the modulations a second at a time while a remote is transmitting but nothing decodes it, and stays on the one that worked**
+- Apps: **`Remote Analyzer` - Life Fido remotes are detected**
+- Apps: **`Remote Analyzer` - `Crypt` and `Crypt Lite` encrypted remotes are detected**
 - SubGHz: **Nero Radio rolling remotes are now decoded and can be replayed as is**
 - SubGHz: **Freezer remotes are decoded, saved and sent back**
 - SubGHz: **Frequency Analyzer - hold OK to use the frequency on screen, without waiting for it to reach the history**
@@ -27,6 +30,8 @@
 - SubGHz Remote: **Fix rolling code and custom button resets after TX, and the counter moving twice per press**
 - Apps: **`SubGHz WarDriving` - RX restarts after TX, and sending a received dynamic signal no longer overwrites a saved file**
 - SubGHz: **KeeLoq `CounterMode: 7` now opens a Doorhan on the first press**
+- SubGHz: **KeeLoq `CounterMode` 7, 8 and 9 each reproduce a DoorHan Smart clone resync pack, one per board family** (what `CounterMode: 7` used to send is now mode 8)
+- SubGHz: **New KeeLoq `CounterMode: 10` - the Phantom / Hiland resync pair, `0xFFFE` then `0xFFFF` in one press, as a clone remote for that system sends it**
 - SubGHz: **The read list is no longer capped at 55 signals, and Hold Right deletes one**
 - SubGHz: **`Delete old signals` makes room by memory now, for a send as well as a read**
 - SubGHz: **Send no longer crashes on a full list**
@@ -50,10 +55,16 @@
 - RFID: **Fix the T5577 app sending a password to a tag that never asked for one** (by @mishamyte | PR #1192)
 - RFID: **Fix the T5577 app ignoring Back while it looks for a tag** (by @mishamyte | PR #1192)
 - RFID: **T5577 `Sniff Password` says `Too much noise` instead of reporting silence when the coil itself chatters** (by @mishamyte | PR #1202)
+- RFID: **T5577 `Clear Password` shows the password that opened the tag, and offers to keep one you typed** (by @mishamyte | PR #1208)
+- RFID: **Fix the T5577 app saying `Not cleared` about a tag it had opened, on one flaked read** (by @mishamyte | PR #1208)
 - RFID: **T5577 app - a Test Tag backup is deleted once the tag is proven restored, and warns before overwriting one that survives** (by @mishamyte | PR #1179)
 - SubGHz: **Fix Marantec24 and Linear Delta 3 not decoding a signal the Flipper itself sends** (by @mishamyte | PR #1207 | Closes #1205)
 - SubGHz: **Fix Holtek HT12X reporting a key off one frame when the receiver had just been reset** (by @mishamyte | PR #1207)
-- Apps: Build tag (**4nov2026p3**) - **Check out more Apps updates and fixes by following** [this link](https://github.com/xMasterX/all-the-plugins/commits/dev)
+- SubGHz: **New KeeLoq manufacturer Phantom / Hiland - these remotes read and send properly, and `KL: Phantom/Hiland 433M` is in Add Manually**
+- SubGHz: **New protocol FAAC TM - the 12 dip switch TM 433/868 DS remotes, which CAME 12bit used to read as its own, with `FAAC TM 433MHz` and `FAAC TM 868MHz` in Add Manually**
+- SubGHz: **868.00 MHz is in the default frequency list**
+- iButton: **Cyfral and Metakom keys can be written to TM01x blanks** (by @Leptopt1los | PR #1209 | In OFW PR 4508)
+- Apps: Build tag (**6nov2026**) - **Check out more Apps updates and fixes by following** [this link](https://github.com/xMasterX/all-the-plugins/commits/dev)
 ## Other changes
 - SubGHz: **CAME TWEE no longer reads past the end of its decode table on a parcel counter of F**
 - SubGHz: **Fix encoder buffers too small for the keys Came Atomo, Somfy Keytis, Somfy Telis, Power Smart and Dooya accept**
@@ -64,8 +75,11 @@
 - OFW: **Typos fixed in on-screen text**
 - OFW: **FatFs: apply upstream R0.12c patches, fix 0-byte files in fragmented exFAT directories**
 - OFW: **NFC: reject Ultralight READ/WRITE starting at the page count**
+- OFW: **Renaming a file so only its letter case changes now works, instead of being refused as a name that is already taken**
+- OFW: **iButton makes the error sound and holds the LED red when a blank refuses the key, instead of blinking yellow** (refactor of PR #1209)
 - API: **Export `faac_slh_reset_prog_mode` for apps**
 - API: **Export `subghz_protocol_decoder_base_get_type` for apps**
+- API: **Export `ibutton_protocols_is_writable` and `bit_lib_reverse_32_fast` for apps** (In OFW PR 4511)
 - API: **Export the T5577 block read/write API for apps (`t5577.h`, `t5577_file.h`)** (by @mishamyte | PR #1179)
 - iButton: **Fix write success text going off screen**
 - RFID: **Move the Writing screen text up so long file names fit**

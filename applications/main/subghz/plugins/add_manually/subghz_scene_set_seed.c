@@ -75,14 +75,15 @@ void subghz_scene_set_seed_on_enter(void* context) {
 
     // Setup view
     ByteInput* byte_input = subghz->byte_input;
-    // Monarch reuses seed for its hop discriminator and O-Code asks for its installer
-    // code here, so ask for each by the right name
+    // Monarch and Phantom/Hiland reuse seed for their hop discriminator and O-Code asks for
+    // its installer code here, so ask for each by the right name
     const char* header = "Enter SEED in hex";
     if(subghz->gen_info->type == GenNiceFlorS) {
         header = second ? "Enter CERT in hex" : "Enter IC in hex";
     } else if(
         (subghz->gen_info->type == GenKeeloqSeed) &&
-        (strcmp(subghz->gen_info->keeloq_seed.manuf, "Monarch") == 0)) {
+        ((strcmp(subghz->gen_info->keeloq_seed.manuf, "Monarch") == 0) ||
+         (strcmp(subghz->gen_info->keeloq_seed.manuf, "Phantom_Hiland") == 0))) {
         header = "Enter DISC. in hex";
     }
     byte_input_set_header_text(byte_input, header);
@@ -176,9 +177,9 @@ bool subghz_scene_set_seed_on_event(void* context, SceneManagerEvent event) {
                 scene_manager_next_scene(subghz->scene_manager, SubGhzSceneShowError);
             } else {
                 subghz_file_name_clear(subghz);
-
                 scene_manager_set_scene_state(
-                    subghz->scene_manager, SubGhzSceneSetType, SubGhzCustomEventManagerSet);
+                    subghz->scene_manager, SubGhzSceneSaveName, SubGhzCustomEventManagerSet);
+
                 scene_manager_next_scene(subghz->scene_manager, SubGhzSceneSaveName);
             }
         }

@@ -9,7 +9,7 @@ from flipper.app import App
 
 # Hardcoded build info, replacing the values normally derived from git and
 # environment variables.
-VERSION = "GrapheneFlipper AV0.8"
+VERSION = "GrapheneFlipper V1"
 HARDCODED_GIT_ORIGIN = "https://github.com/s4ms3p10n3/GrapheneFlipper"
 HARDCODED_BUILD_DATE = "30-10-2026"  # dd-mm-yyyy
 COMMITNAME = "GoFuckYourself"
@@ -45,11 +45,8 @@ class GitVersion:
 
         version = VERSION
 
-        force_no_dirty = (
-            os.environ.get("FORCE_NO_DIRTY", None)
-            or ""
-        )
-        if (force_no_dirty != ""):
+        force_no_dirty = os.environ.get("FORCE_NO_DIRTY", None) or ""
+        if force_no_dirty != "":
             dirty = False
 
         if "SOURCE_DATE_EPOCH" in os.environ:
@@ -70,7 +67,7 @@ class GitVersion:
             "GIT_ORIGIN": HARDCODED_GIT_ORIGIN,
             "GIT_COMMIT_DATE": commit_date,
         }
-    
+
     # "GIT_ORIGIN": ",".join(self._get_git_origins()),
 
     def _get_git_origins(self):
@@ -183,4 +180,3 @@ class Main(App):
 
 if __name__ == "__main__":
     Main()()
-    

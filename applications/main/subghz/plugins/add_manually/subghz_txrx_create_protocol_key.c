@@ -72,7 +72,8 @@ bool subghz_txrx_gen_data_protocol_and_te(
     const char* protocol_name,
     uint64_t key,
     uint32_t bit,
-    uint32_t te) {
+    uint32_t te,
+    uint32_t gt) {
     furi_assert(instance);
     bool ret = false;
     if(subghz_txrx_gen_data_protocol(instance, preset_name, frequency, protocol_name, key, bit)) {
@@ -82,10 +83,9 @@ bool subghz_txrx_gen_data_protocol_and_te(
             ret = true;
         }
     }
-    if(ret) {
-        uint32_t guard_time = 30;
-        if(!flipper_format_update_uint32(
-               instance->fff_data, "Guard_time", (uint32_t*)&guard_time, 1)) {
+    // Only Princeton serializes a Guard_time, and update needs the key to be there already
+    if(ret && gt) {
+        if(!flipper_format_update_uint32(instance->fff_data, "Guard_time", (uint32_t*)&gt, 1)) {
             ret = false;
             FURI_LOG_E(TAG, "Unable to update Guard_time");
         }
@@ -429,6 +429,38 @@ bool subghz_txrx_gen_beninca_arc_protocol(
     if(txrx->transmitter && subghz_protocol_beninca_arc_create_data(
                                 subghz_transmitter_get_protocol_instance(txrx->transmitter),
                                 txrx->fff_data,
+                                serial,
+                                btn,
+                                cnt,
+                                txrx->preset)) {
+        res = true;
+    }
+
+    subghz_transmitter_free(txrx->transmitter);
+
+    return res;
+}
+
+bool subghz_txrx_gen_belkorn_protocol(
+    void* context,
+    const char* preset_name,
+    uint32_t frequency,
+    uint8_t model,
+    uint32_t serial,
+    uint8_t btn,
+    uint16_t cnt) {
+    SubGhzTxRx* txrx = context;
+
+    bool res = false;
+
+    txrx->transmitter =
+        subghz_transmitter_alloc_init(txrx->environment, SUBGHZ_PROTOCOL_BELKORN_NAME);
+    subghz_txrx_set_preset(txrx, preset_name, frequency, NULL, 0);
+
+    if(txrx->transmitter && subghz_protocol_belkorn_create_data(
+                                subghz_transmitter_get_protocol_instance(txrx->transmitter),
+                                txrx->fff_data,
+                                model,
                                 serial,
                                 btn,
                                 cnt,

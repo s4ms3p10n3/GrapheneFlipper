@@ -29,7 +29,10 @@ void subghz_scene_set_type_fill_generation_infos(GenInfo* infos_dest, SetType ty
             .data.bits = 24,
             .data.te = 400,
             .data.te_min = 109,
-            .data.te_max = 689};
+            .data.te_max = 689,
+            .data.gt = 30,
+            .data.gt_min = 15,
+            .data.gt_max = 72};
         break;
     case SetTypeTelcomaEdge:
         gen_info = (GenInfo){
@@ -52,7 +55,10 @@ void subghz_scene_set_type_fill_generation_infos(GenInfo* infos_dest, SetType ty
             .data.bits = 24,
             .data.te = 357,
             .data.te_min = 109,
-            .data.te_max = 689};
+            .data.te_max = 689,
+            .data.gt = 30,
+            .data.gt_min = 15,
+            .data.gt_max = 72};
         break;
     case SetTypeNiceFlo12bit:
         gen_info = (GenInfo){
@@ -537,6 +543,17 @@ void subghz_scene_set_type_fill_generation_infos(GenInfo* infos_dest, SetType ty
             .beninca_arc.serial = key & 0x00FFFFFF,
             .beninca_arc.btn = 0x02,
             .beninca_arc.cnt = 0x03};
+        break;
+    case SetTypeBelGate:
+    case SetTypeKorn:
+        gen_info = (GenInfo){
+            .type = GenBelKorn,
+            .mod = "AM650",
+            .freq = 433920000,
+            .belkorn.serial = key & 0xFFFFFFFF,
+            .belkorn.btn = 0x01, // one-hot: 0x01, 0x02, 0x04, 0x20
+            .belkorn.cnt = 0x05,
+            .belkorn.model = (type == SetTypeKorn) ? 0xD : 0x7};
         break;
     case SetTypeJarolift:
         gen_info = (GenInfo){

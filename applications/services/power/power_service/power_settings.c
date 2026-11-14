@@ -17,6 +17,15 @@ typedef struct {
     uint32_t auto_poweroff_delay_ms;
 } PowerSettingsPrevious;
 
+/*
+
+I have set up Drone CI for this repo. I am testing the build trigger and need to deploy something for it to act.
+This is the only file i had open at the time of setup so im just doing this comment to make a change
+
+
+May god help us all...
+*/
+
 void power_settings_load(PowerSettings* settings) {
     furi_assert(settings);
 

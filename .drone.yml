@@ -356,8 +356,6 @@ trigger:
   event:
     - tag
 
-node:
-  typ: dev2
 
 ---
 kind: pipeline
@@ -702,5 +700,4 @@ trigger:
   event:
     - push
 
-node:
-  typ: dev2
+

@@ -699,5 +699,7 @@ trigger:
     - dev
   event:
     - push
+    - tag
+    - custom
 
 

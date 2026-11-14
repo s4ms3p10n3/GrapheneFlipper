@@ -22,6 +22,7 @@ typedef struct {
 I have set up Drone CI for this repo. I am testing the build trigger and need to deploy something for it to act.
 This is the only file i had open at the time of setup so im just doing this comment to make a change
 
+Edit 1: So looks like i forgot to set up a runner so the code never actually started compiling...
 
 May god help us all...
 */

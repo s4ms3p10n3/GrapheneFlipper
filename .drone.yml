@@ -181,7 +181,7 @@ steps:
   - ls -laS artifacts-default
   - mv artifacts-default/ ${DRONE_TAG}
   - ls -laS ${DRONE_TAG}
-- name: Publish GitHub release
+- name: Upload stable release assets as draft
   image: plugins/github-release
   settings:
     api_key:
@@ -196,10 +196,19 @@ steps:
     title: ${DRONE_TAG}
     note: CHANGELOG.md
     prerelease: false
+    draft: true
+    file_exists: skip
     checksum:
     - md5
     - sha1
     - crc32
+- name: Publish stable GitHub release
+  image: python:3.12-slim
+  environment:
+    GITHUB_TOKEN:
+      from_secret: github_apikey
+  commands:
+  - python3 .ci_files/publish_github_draft.py
 volumes:
 - name: ccache
   host:

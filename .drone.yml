@@ -36,7 +36,7 @@ steps:
 
   - name: "Build clean"
     image: hfdj/fztools
-    pull: never
+    pull: if-not-exists
     commands:
       - export DIST_SUFFIX=${DRONE_TAG}c
       - export WORKFLOW_BRANCH_OR_TAG=release-cfw
@@ -75,7 +75,7 @@ steps:
 
   - name: "Build default"
     image: hfdj/fztools
-    pull: never
+    pull: if-not-exists
     commands:
       - export DIST_SUFFIX=${DRONE_TAG}
       - export WORKFLOW_BRANCH_OR_TAG=release-cfw
@@ -119,7 +119,7 @@ steps:
 
   - name: "Build with extra apps"
     image: hfdj/fztools
-    pull: never
+    pull: if-not-exists
     commands:
       - wget https://github.com/xMasterX/all-the-plugins/releases/latest/download/all-the-apps-extra.tgz
       - tar zxf all-the-apps-extra.tgz
@@ -237,7 +237,7 @@ steps:
 
   - name: "Do Github release"
     image: ddplugins/github-release
-    pull: never
+    pull: if-not-exists
     settings:
       github_url: https://github.com
       repo_owner:
@@ -258,7 +258,7 @@ steps:
 
   - name: "Trigger update server reindex"
     image: hfdj/fztools
-    pull: never
+    pull: if-not-exists
     environment:
       UPD_KEY:
         from_secret: git_update_serv_token
@@ -278,7 +278,7 @@ steps:
 
   - name: "Send discord notification"
     image: hfdj/fztools
-    pull: never
+    pull: if-not-exists
     environment:
       DISCORD_WEBHOOK:
         from_secret: dis_release_webhook
@@ -396,7 +396,7 @@ steps:
 
   - name: "Build dev clean"
     image: hfdj/fztools
-    pull: never
+    pull: if-not-exists
     commands:
       - export DIST_SUFFIX=${DRONE_BUILD_NUMBER}c
       - export WORKFLOW_BRANCH_OR_TAG=dev-cfw
@@ -436,7 +436,7 @@ steps:
 
   - name: "Build dev default"
     image: hfdj/fztools
-    pull: never
+    pull: if-not-exists
     commands:
       - export DIST_SUFFIX=${DRONE_BUILD_NUMBER}
       - export WORKFLOW_BRANCH_OR_TAG=dev-cfw
@@ -480,7 +480,7 @@ steps:
 
   - name: "Build dev with extra apps"
     image: hfdj/fztools
-    pull: never
+    pull: if-not-exists
     commands:
       - wget https://github.com/xMasterX/all-the-plugins/releases/latest/download/all-the-apps-extra.tgz
       - tar zxf all-the-apps-extra.tgz
@@ -598,7 +598,7 @@ steps:
 
   - name: "Trigger update server reindex"
     image: hfdj/fztools
-    pull: never
+    pull: if-not-exists
     environment:
       UPD_KEY:
         from_secret: git_update_serv_token
@@ -618,7 +618,7 @@ steps:
 
   - name: "Send discord notification"
     image: hfdj/fztools
-    pull: never
+    pull: if-not-exists
     environment:
       DISCORD_WEBHOOK:
         from_secret: dis_dev_webhook

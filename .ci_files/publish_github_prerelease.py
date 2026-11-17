@@ -264,8 +264,6 @@ def main() -> int:
         "",
         "This is an automatically generated development build. It may contain unfinished changes and is not a stable release.",
     ]
-    if build_link:
-        body_lines.extend(["", f"Drone build: {build_link}"])
     body = "\n".join(body_lines)
 
     tag, release, already_published = choose_release(

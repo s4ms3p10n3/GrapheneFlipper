@@ -125,13 +125,10 @@ class Main(App):
 
         current_info.update(
             {
-                "BUILD_DATE": self.commit_date.strftime("%d-%m-%Y"),
                 "TARGET": self.args.target,
                 "FIRMWARE_ORIGIN": self.args.firmware_origin,
             }
         )
-
-        del current_info["GIT_COMMIT_DATE"]
 
         version_values = []
         for key in current_info:

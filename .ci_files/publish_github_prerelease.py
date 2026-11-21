@@ -130,7 +130,7 @@ def create_draft_release(
             "name": title,
             "body": body,
             "draft": True,
-            "prerelease": True,
+            "prerelease": False,
             "make_latest": "false",
         },
     )

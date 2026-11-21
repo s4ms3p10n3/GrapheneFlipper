@@ -131,7 +131,7 @@ def create_draft_release(
             "body": body,
             "draft": True,
             "prerelease": False,
-            "make_latest": "false",
+            "make_latest": "true",
         },
     )
 
@@ -257,12 +257,12 @@ def main() -> int:
     expected = expected_asset_sizes(files)
 
     body_lines = [
-        f"Automated GrapheneFlipper development prerelease #{build_number}.",
+        f"Automated GrapheneFlipper development Release #{build_number}.",
         "",
         f"Branch: `{branch}`",
         f"Commit: `{commit}`",
         "",
-        "This is an automatically generated development build. It may contain unfinished changes and is not a stable release.",
+        "This is an automatically generated development build. It may contain unfinished changes and IS a stable release.",
     ]
     body = "\n".join(body_lines)
 

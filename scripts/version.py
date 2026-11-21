@@ -172,7 +172,7 @@ class Main(App):
                 print("Version information hasn't changed")
 
         version_json = {
-            "firmware_build_date": current_info["GIT_COMMIT_DATE"],
+            "firmware_build_date": current_info["BUILD_DATE"],
             "firmware_commit": current_info["GIT_COMMIT"],
             "firmware_branch": current_info["GIT_BRANCH"],
             "firmware_target": current_info["TARGET"],

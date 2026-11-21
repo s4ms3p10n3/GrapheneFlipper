@@ -180,7 +180,7 @@ def choose_release(
                 "PATCH",
                 f"{repo_api}/releases/{release['id']}",
                 token,
-                {"name": title, "body": body, "draft": True, "prerelease": True},
+                {"name": title, "body": body, "draft": True, "prerelease": False},
             )
             return tag, release, False
 
@@ -299,7 +299,7 @@ def main() -> int:
         "PATCH",
         f"{repo_api}/releases/{release_id}",
         token,
-        {"draft": False, "prerelease": True, "make_latest": "false"},
+        {"draft": False, "prerelease": False, "make_latest": "true"},
     )
 
     html_url = published.get(

@@ -122,12 +122,22 @@ class Main(App):
 
     def generate(self):
         current_info = GitVersion(self.args.sourcedir).get_version_info()
+
+        build_date = (
+            date.today()
+            if current_info["BUILD_DIRTY"]
+            else current_info["GIT_COMMIT_DATE"]
+        )
+
         current_info.update(
             {
+                "BUILD_DATE": build_date.strftime("%d-%m-%Y"),
                 "TARGET": self.args.target,
                 "FIRMWARE_ORIGIN": self.args.firmware_origin,
             }
         )
+
+        del current_info["GIT_COMMIT_DATE"]
 
         version_values = []
         for key in current_info:

@@ -11,7 +11,10 @@ from flipper.app import App
 # environment variables.
 VERSION = "GrapheneFlipper V1"
 HARDCODED_GIT_ORIGIN = "https://github.com/s4ms3p10n3/GrapheneFlipper"
-HARDCODED_BUILD_DATE = "30-10-2026"  # dd-mm-yyyy
+HARDCODED_BUILD_DATE = datetime.strptime(
+    self._exec_git("log -1 --format=%cd --date=default").strip(),
+    "%a %b %d %H:%M:%S %Y %z",
+)  # dd-mm-yyyy
 COMMITNAME = "GoFuckYourself"
 BRANCHNAME = "Graphene"
 

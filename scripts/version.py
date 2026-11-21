@@ -93,13 +93,6 @@ class GitVersion:
         )
 
 
-HARDCODED_BUILD_DATE = (
-    GitVersion.get_version_info()
-    .get("GIT_COMMIT_DATE", date.today())
-    .strftime("%d-%m-%Y")
-)
-
-
 class Main(App):
     def init(self):
         self.subparsers = self.parser.add_subparsers(help="sub-command help")
@@ -132,7 +125,7 @@ class Main(App):
 
         current_info.update(
             {
-                "BUILD_DATE": HARDCODED_BUILD_DATE,
+                "BUILD_DATE": self.commit_date.strftime("%d-%m-%Y"),
                 "TARGET": self.args.target,
                 "FIRMWARE_ORIGIN": self.args.firmware_origin,
             }
